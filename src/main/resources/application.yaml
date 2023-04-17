@@ -1,0 +1,18 @@
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: my_route
+          uri: http://localhost:8080
+          predicates:
+            - Path=/api/**
+          filters:
+            - AddRequestHeader=X-Request-Id, 100
+            - name: RequestRateLimiter
+              args:
+                key-resolver: '#{T(reactor.ipc.netty.http.server.HttpServer).REMOTE_ADDRESS_ATTRIBUTE}'
+                redis-rate-limiter.replenishRate: 10
+                redis-rate-limiter.burstCapacity: 20
