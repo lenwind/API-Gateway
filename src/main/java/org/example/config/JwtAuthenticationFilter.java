@@ -23,6 +23,7 @@ public class JwtAuthenticationFilter implements GlobalFilter, Ordered {
 
     private boolean isValidToken(String token) {
         // Implement your JWT token validation logic here
+
         return true;
     }
 
